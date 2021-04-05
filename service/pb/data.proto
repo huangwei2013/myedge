@@ -1,0 +1,49 @@
+syntax = "proto3";
+
+package service;
+
+option go_package = ".;pb";
+
+service Data {
+    rpc DataRecv (DataRequest) returns (DataReply) {}
+
+    // 客户端-->服务端流式响应
+    rpc DataC2SStream (StreamDataRequest) returns (stream StreamDataReply){}
+
+    // 服务端-->客户端流式请求
+    rpc DataS2CStream (stream StreamDataRequest) returns (StreamDataReply){}
+
+    // 双向流式
+    rpc DataBiStreaming (stream StreamDataRequest) returns (stream StreamDataReply){}
+}
+
+message DataRequest {
+    string id = 1;
+    int64 mid = 2;
+    repeated DataRecord records = 3;
+}
+
+message DataReply {
+    int32 code = 1;
+    int64 next_mid = 3;
+}
+
+message DataRecord {
+    int64 mid = 1;
+    bytes msg = 2;
+}
+
+message StreamDataRequest {
+    string id = 1;
+    repeated StreamDataRecord records = 2;
+}
+
+message StreamDataReply {
+    int32 code = 1;
+    int64 next_mid = 2;
+}
+
+message StreamDataRecord {
+    int64 mid = 1;
+    bytes msg = 2;
+}

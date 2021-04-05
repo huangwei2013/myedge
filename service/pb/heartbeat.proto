@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package service;
+
+option go_package = ".;pb";
+
+service HeartBeat {
+    rpc HeartBeat (HBRequest) returns (HBReply) {}
+}
+
+message HBRequest {
+    string id = 1;
+    int64 mid = 2;
+}
+
+message HBReply {
+    int32 code = 1;
+}

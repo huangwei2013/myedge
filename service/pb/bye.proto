@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package service;
+
+option go_package = ".;pb";
+
+service Bye {
+    rpc SayBye (ByeRequest) returns (ByeReply) {}
+}
+
+message ByeRequest {
+    string id = 1;
+}
+
+message ByeReply {
+    int32 code = 1;
+}
